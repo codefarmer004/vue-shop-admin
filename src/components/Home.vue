@@ -91,7 +91,7 @@ export default {
     //点击子菜单导航状态，显示高亮效果，保存链接的激活状态
     saveNavState(activePath){
         window.sessionStorage.setItem("activePath",activePath)
-        this.activePath = activePath
+        this.activePath = activePath    
     }
   }
 };
