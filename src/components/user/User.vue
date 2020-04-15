@@ -136,6 +136,30 @@
         <el-button type="primary" @click="editUser">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 分配角色对话框 -->
+    <el-dialog title="分配角色" :visible.sync="showSetRoleDialogVisible" width="50%">
+      <div>
+        <p>当前的用户：{{userInfo.username}}</p>
+        <p>当前的角色：{{userInfo.role_name}}</p>
+        <p>
+          分配新角色：
+          <el-select v-model="selectRoleId" placeholder="请选择">
+            <el-option
+              v-for="item in rolesLsit"
+              :key="item.value"
+              :label="item.roleName"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </p>
+      </div>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showSetRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo(selectRoleId)">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -224,8 +248,8 @@ export default {
         ]
       },
       // 分配角色对话框
-      setRoleDialogVisible: false,
-      // 当前需要被分配角色的用户
+      showSetRoleDialogVisible: false,
+      // 当前需要被分配角色的用户信息
       userInfo: {},
       // 所有角色数据列表
       rolesLsit: [],
@@ -351,7 +375,31 @@ export default {
       if (res.meta.status !== 200) return this.$message.error("删除用户失败！");
       this.$message.success("删除用户成功！");
       this.getUserList();
-    }
+    },
+    //展示分配权限对话框
+    async showSetRole(userinfo) {
+      this.userInfo = userinfo;
+      // 展示对话框之前，获取所有角色列表
+      const { data: res } = await this.$http.get("roles");
+      if (res.meta.status !== 200) {
+        return this.$message.error("获取角色列表失败！");
+      }
+      this.rolesLsit = res.data;
+      this.showSetRoleDialogVisible = true;
+    },
+    // 保存分配角色
+    async saveRoleInfo () {
+      if (!this.selectRoleId) {
+        return this.$message.error('请选择要分配的角色')
+      }
+      const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, { rid: this.selectRoleId })
+      if (res.meta.status !== 200) {
+        return this.$message.error('更新用户角色失败！')
+      }
+      this.$message.success('更新角色成功！')
+      this.getUserList()
+      this.setRoleDialogVisible = false
+    },
   }
 };
 </script>
