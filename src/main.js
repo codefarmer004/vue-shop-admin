@@ -8,6 +8,8 @@ import "../node_modules/element-ui/lib/theme-chalk/index.css"
 import './assets/css/global.css'
 // 导入字体图标
 import './assets/fonts/iconfont.css'
+// 导入表格树
+import TreeTable from "vue-table-with-tree-grid"
 
 import axios from 'axios'
 // 配置请求根路径
@@ -26,6 +28,8 @@ axios.interceptors.request.use(config =>{
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
+// 组件全局注册 表格树
+Vue.component('tree-table', TreeTable)
 new Vue({
   router,
   store,

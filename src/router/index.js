@@ -6,9 +6,9 @@ import Welcome from "../components/Welcome"
 import Users from '../components/user/User'
 import Rights from "../components/power/Rights"
 import Roles from "../components/power/Roles"
-import Cate from "../components/gooods/Cate"
-import GoodsList from "../components/gooods/List"
-import Params from "../components/gooods/Params"
+import Cate from "../components/goods/Cate"
+import GoodsList from "../components/goods/List"
+import Params from "../components/goods/Params"
 
 
 Vue.use(VueRouter)
