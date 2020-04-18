@@ -346,9 +346,9 @@ export default {
       this.editDialogVisible = true
     },
     // 重置修改表单
-    editDialogClosed () {
-      this.$refs.editFromRef.resetFields()
-    },
+      editDialogClosed () {
+        this.$refs.editFromRef.resetFields()
+      },
     // 修改参数
     editParams () {
       this.$refs.editFromRef.validate(async valid => {
